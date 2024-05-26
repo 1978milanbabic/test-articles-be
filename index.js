@@ -7,6 +7,8 @@ import { Server } from 'socket.io';
 import userRoutes from './routes/users.js';
 import articleRoutes from './routes/articles.js';
 import commentRoutes from './routes/comments.js';
+import insertDummyData from './utils/insertDummyData.js';
+
 dotenv.config();
 
 const app = express();
@@ -59,6 +61,9 @@ io.on('connection', (socket) => {
 
 // Export the Socket.IO instance for use in controllers
 export { io };
+
+// insert dummy data
+await insertDummyData();
 
 // server
 app.listen(process.env.PORT || 3500, () => {

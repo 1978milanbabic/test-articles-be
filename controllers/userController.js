@@ -7,7 +7,7 @@ export const signup = async (req, res) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, password: hashedPassword, editor });
+    const newUser = new User({ name, password: hashedPassword, editor: !!editor });
     await newUser.save();
     res.status(201).json({ message: 'User created' });
   } catch (error) {
@@ -29,9 +29,13 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ id: user._id, editor: user.editor }, process.env.JWT_SECRET, {
-      expiresIn: '1d',
-    });
+    const token = jwt.sign(
+      { id: user._id, name: user.name, editor: user.editor || false },
+      'secret',
+      {
+        expiresIn: '1h',
+      }
+    );
     res.json({ token });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
