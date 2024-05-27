@@ -7,3 +7,9 @@ This project is a full-stack application that allows users to register, log in, 
 | Node Version |
 | ------------ |
 | 18.18.2      |
+
+# Weak Points
+
+- Server variables should not be exposed!
+- There is practically no antispam system
+- You can create multiple users with the same names and passwords: there is no check for duplicates (although it's not blocking)
