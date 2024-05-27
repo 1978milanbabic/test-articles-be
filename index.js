@@ -47,7 +47,8 @@ app.use((err, req, res, next) => {
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*', // Allow all origins (for development)
+    origin: 'http://localhost:3000', // Allow all origins (for development)
+    methods: ['GET', 'POST'],
   },
 });
 
@@ -66,6 +67,6 @@ export { io };
 await insertDummyData();
 
 // server
-app.listen(process.env.PORT || 3500, () => {
+server.listen(process.env.PORT || 3500, () => {
   console.log('Node app is running on port', process.env.PORT || 3500);
 });

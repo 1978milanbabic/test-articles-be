@@ -1,4 +1,5 @@
 import Article from '../db/articles.js';
+import Comment from '../db/comment.js';
 
 export const createArticle = async (req, res) => {
   const { title, content } = req.body;
@@ -33,5 +34,18 @@ export const getArticleById = async (req, res) => {
     res.json(article);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
+  }
+};
+
+export const getCommentsByArticleId = async (req, res) => {
+  console.log(req.params.id);
+  try {
+    const comments = await Comment.find({ article: req.params.id }).populate('author', 'name');
+    if (!comments) {
+      return res.status(404).json({ message: 'No comments found for this article' });
+    }
+    res.json(comments);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching comments' });
   }
 };

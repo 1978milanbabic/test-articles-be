@@ -25,9 +25,11 @@ const insertDummyData = async () => {
 
       const dummyComments = [];
       createdArticles.forEach((article) => {
-        for (let i = 0; i < 2; i++) {
+        const randomBetween = (max, min) => Math.floor(Math.random() * (max - min + 1)) + min;
+        let randNum = randomBetween(3, 0);
+        for (let i = 0; i < randNum; i++) {
           dummyComments.push({
-            content: 'Lorem Ipsum '.repeat(5).slice(0, 100), // Generate Lorem Ipsum text up to 100 characters
+            content: 'Lorem Ipsum '.repeat(5).slice(0, 100) + ' ' + i, // Generate Lorem Ipsum text up to 100 characters
             author: dummyUser._id,
             article: article._id,
           });

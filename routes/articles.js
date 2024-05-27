@@ -1,5 +1,5 @@
 import express from 'express';
-import { createArticle, getArticles, getArticleById } from '../controllers/articleController.js';
+import { createArticle, getArticles, getArticleById, getCommentsByArticleId } from '../controllers/articleController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -10,5 +10,8 @@ router.route('/')
 
 router.route('/:id')
   .get(getArticleById);;
+
+router.route('/:id/comments')
+  .get(getCommentsByArticleId)
 
 export default router;
