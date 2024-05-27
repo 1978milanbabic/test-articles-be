@@ -19,7 +19,8 @@ export const createComment = async (req, res) => {
     article.comments.push(newComment._id);
     await article.save();
 
-    io.emit('commentCreated', newComment);
+    const commentToEmit = await Comment.findById(newComment._id).populate('author', 'name');
+    io.emit('newComment', commentToEmit);
 
     res.status(201).json(newComment);
   } catch (error) {
